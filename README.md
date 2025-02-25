@@ -5,6 +5,39 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+1. Installer **PostgreSQL** avec ou non un GUI (PgAdmin, par exemple).
+
+2. Créer la base de données avec le nom: **digital_library**
+
+1. pour installer les dépendances de l'application, exécuter:
+```bash
+npm install
+```
+2. Si le fichier **.env** n'est pas présent dans votre architecture de fichiers:
+```bash
+touch .env
+```
+3. Vérifier que DATABASE_URL est bien configuré dans le **.env**. Exemple:
+```bash
+DATABASE_URL="postgresql://postgres:@localhost:5432/digital_library?schema=public"
+```
+
+<!-- 4. pour générer la configuration prisma exécuter la commande :
+```bash
+yarn db:generate
+```
+
+5. pour exécuter les fichiers de migration prisma dans une bdd sqlite, exécuter la commande:
+```bash
+yarn db:migrate
+```
+
+
+7. lancer le projet avec la commande : 
+```bash
+yarn serve
+``` -->
+
 First, run the development server:
 
 ```bash

@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ETUDIANT
+  ENSEIGNANT
+  BIBLIOTHECAIRE
+  ADMINISTRATEUR
+}
+
+enum FileType {
+  PDF
+  EPUB
+  MP3
+  TXT
+}
+
+enum RequestStatus {
+  EN_ATTENTE
+  TRAITE
+  REJETE
+}
+
+enum NotificationType {
+  EMAIL
+  PUSH
+  NEWSLETTER
+}
+
+model User {
+  id              String        @id @default(uuid())
+  matricule       String        @unique
+  nom             String
+  prenom          String
+  email           String        @unique
+  motDePasse      String
+  role            Role
+  dateInscription DateTime      @default(now())
+  files           File[]
+  ratings         Rating[]
+  requests        Request[]
+  notifications   Notification[]
+  comments        Comment[]
+  faq             FAQ[]
+}
+
+model File {
+  id                    String    @id @default(uuid())
+  titre                 String
+  description           String?
+  cheminStockage        String
+  typeFichier           FileType
+  statutTelechargement  Boolean   @default(true)
+  statutAccessibilite   Boolean   @default(true)
+  dateUpload            DateTime  @default(now())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories FileCategory[]
+  tags       FileTag[]
+  ratings    Rating[]
+  comments   Comment[]
+}
+
+model Category {
+  id    String          @id @default(uuid())
+  nom   String          @unique
+  files FileCategory[]
+}
+
+model FileCategory {
+  fileId      String
+  categoryId  String
+  file        File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  @@id([fileId, categoryId])
+}
+
+model Tag {
+  id    String    @id @default(uuid())
+  nom   String    @unique
+  files FileTag[]
+}
+
+model FileTag {
+  fileId  String
+  tagId   String
+  file    File    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  @@id([fileId, tagId])
+}
+
+model Rating {
+  id              String    @id @default(uuid())
+  note            Int       @default(1) //@db.Check("note BETWEEN 1 AND 5")
+  commentaire     String?
+  dateEvaluation  DateTime  @default(now())
+  userId          String
+  fileId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file            File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String    @id @default(uuid())
+  content   String
+  date      DateTime  @default(now())
+  userId    String
+  fileId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file      File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+}
+
+model Request {
+  id          String        @id @default(uuid())
+  titre       String
+  description String?
+  statut      RequestStatus @default(EN_ATTENTE)
+  dateRequete DateTime      @default(now())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String            @id @default(uuid())
+  message   String
+  type      NotificationType
+  dateEnvoi DateTime          @default(now())
+  statut    Boolean           @default(false)
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FAQ {
+  id            String    @id @default(uuid())
+  question      String
+  reponse       String
+  dateCreation  DateTime  @default(now())
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
