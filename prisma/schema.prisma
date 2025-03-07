@@ -48,6 +48,7 @@ model User {
   motDePasse      String
   role            Role
   dateInscription DateTime      @default(now())
+  deletedAt       DateTime?
   files           File[]
   ratings         Rating[]
   requests        Request[]
@@ -65,6 +66,7 @@ model File {
   statutTelechargement  Boolean   @default(true)
   statutAccessibilite   Boolean   @default(true)
   dateUpload            DateTime  @default(now())
+  deletedAt             DateTime?
   userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   categories FileCategory[]
