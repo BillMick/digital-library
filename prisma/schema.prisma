@@ -67,10 +67,10 @@ model File {
   dateUpload            DateTime  @default(now())
   userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  categories FileCategory[]
-  tags       FileTag[]
-  ratings    Rating[]
-  comments   Comment[]
+  categories            FileCategory[]
+  tags                  FileTag[]
+  ratings               Rating[]
+  comments              Comment[]
 }
 
 model Category {
