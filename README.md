@@ -19,7 +19,7 @@ touch .env
 ```
 3. Vérifier que DATABASE_URL est bien configuré dans le **.env**. Exemple:
 ```bash
-DATABASE_URL="postgresql://postgres:@localhost:5432/digital_library?schema=public"
+DATABASE_URL="postgresql://postgres@localhost:5432/digital_library?schema=public"
 ```
 
 <!-- 4. pour générer la configuration prisma exécuter la commande :
