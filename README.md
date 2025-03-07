@@ -21,6 +21,9 @@ touch .env
 ```bash
 DATABASE_URL="postgresql://postgres@localhost:5432/digital_library?schema=public"
 ```
+> Pour ce qui est de l'architecture frontend et backend:
+> le backend sera écrit dans le dossier __/src/pages/api__.
+> le frondend, dans __/src/pages/__.
 
 <!-- 4. pour générer la configuration prisma exécuter la commande :
 ```bash
