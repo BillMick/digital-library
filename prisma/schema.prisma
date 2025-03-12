@@ -33,6 +33,12 @@ enum RequestStatus {
   REJETE
 }
 
+enum UploadStatus {
+  EN_ATTENTE
+  ACCEPTEE
+  REJETEE
+}
+
 enum NotificationType {
   EMAIL
   PUSH
@@ -58,17 +64,19 @@ model User {
 }
 
 model File {
-  id              Int         @id @default(autoincrement())
+  id              Int           @id @default(autoincrement())
   title           String
   description     String?
   path            String
   type            FileType
-  isDownloadable  Boolean     @default(true) // file exists, isReadable but is not downloadable
-  isAccessible    Boolean     @default(true) // file exists but is neither readable nor downloadable for other users (students, teachers)
-  uploadDate      DateTime    @default(now())
+  isDownloadable  Boolean       @default(true) // file exists, isReadable but is not downloadable
+  isAccessible    Boolean       @default(true) // file exists but is neither readable nor downloadable for other users (students, teachers)
+  status          UploadStatus  @default(EN_ATTENTE)
+  comment         String?       
+  uploadDate      DateTime      @default(now())
   deletedAt       DateTime?
   userId          String
-  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade) // should change ... Cascade <- SET NULL
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade) // should change ... Cascade <- SET NULL
   categories      Category[]
   tags            Tag[]
   ratings         Rating[]
