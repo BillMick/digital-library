@@ -19,7 +19,15 @@ touch .env
 ```
 3. Vérifier que DATABASE_URL est bien configuré dans le **.env**. Exemple:
 ```bash
-DATABASE_URL="postgresql://postgres:@localhost:5432/digital_library?schema=public"
+DATABASE_URL="postgresql://postgres@localhost:5432/digital_library?schema=public"
+```
+> Pour ce qui est de l'architecture frontend et backend:
+> le backend sera écrit dans le dossier __/src/pages/api__.
+> le frondend, dans __/src/pages/__.
+
+4. Migrer la base de données
+```bash
+npx prisma migrate dev --name un_nom_de_migration
 ```
 
 <!-- 4. pour générer la configuration prisma exécuter la commande :
