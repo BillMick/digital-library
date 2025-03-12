@@ -25,6 +25,11 @@ DATABASE_URL="postgresql://postgres@localhost:5432/digital_library?schema=public
 > le backend sera écrit dans le dossier __/src/pages/api__.
 > le frondend, dans __/src/pages/__.
 
+4. Migrer la base de données
+```bash
+npx prisma migrate dev --name un_nom_de_migration
+```
+
 <!-- 4. pour générer la configuration prisma exécuter la commande :
 ```bash
 yarn db:generate
