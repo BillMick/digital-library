@@ -1,4 +1,4 @@
-import formidable from "formidable";
+const formidable = require('formidable');
 import fs from "fs";
 import path from "path";
 import { PrismaClient } from "@prisma/client";
@@ -9,20 +9,31 @@ export const config = {
   },
 };
 
+
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
+  console.log(req.body);
+  console.log("azertr");
+  
+  
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
+  const uploadDir = path.join(process.cwd(), "public/uploads");
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
 
   const form = new formidable.IncomingForm({
-    uploadDir: path.join(process.cwd(), "public/uploads"),
+    uploadDir: path.join(process.cwd(), uploadDir),
     keepExtensions: true,
     multiples: false,
   });
 
   form.parse(req, async (err, fields, files) => {
+    console.log(fields);
+    
     if (err) {
       return res.status(500).json({ error: "File upload failed", details: err });
     }
