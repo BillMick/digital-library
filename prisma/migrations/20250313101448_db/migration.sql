@@ -5,7 +5,7 @@ CREATE TYPE "Role" AS ENUM ('ETUDIANT', 'ENSEIGNANT', 'BIBLIOTHECAIRE', 'ADMINIS
 CREATE TYPE "FileType" AS ENUM ('PDF', 'EPUB', 'MP3', 'TXT');
 
 -- CreateEnum
-CREATE TYPE "RequestStatus" AS ENUM ('EN_ATTENTE', 'TRAITE', 'REJETE');
+CREATE TYPE "RequestStatus" AS ENUM ('EN_ATTENTE', 'TRAITEE', 'REJETEE');
 
 -- CreateEnum
 CREATE TYPE "UploadStatus" AS ENUM ('EN_ATTENTE', 'ACCEPTEE', 'REJETEE');
@@ -13,15 +13,24 @@ CREATE TYPE "UploadStatus" AS ENUM ('EN_ATTENTE', 'ACCEPTEE', 'REJETEE');
 -- CreateEnum
 CREATE TYPE "NotificationType" AS ENUM ('EMAIL', 'PUSH', 'NEWSLETTER');
 
+-- CreateEnum
+CREATE TYPE "AccountStatus" AS ENUM ('VALIDE', 'NON_VALIDE', 'GELE');
+
+-- CreateEnum
+CREATE TYPE "Civility" AS ENUM ('Monsieur', 'Madame');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "regNumber" TEXT NOT NULL,
     "surname" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
+    "civility" "Civility" NOT NULL,
     "email" TEXT NOT NULL,
+    "phoneNumber" TEXT,
     "password" TEXT NOT NULL,
     "role" "Role" NOT NULL,
+    "isValid" BOOLEAN NOT NULL DEFAULT false,
     "inscriptionDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(3),
 
@@ -32,6 +41,8 @@ CREATE TABLE "User" (
 CREATE TABLE "File" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
+    "author" TEXT NOT NULL,
+    "url" TEXT,
     "description" TEXT,
     "path" TEXT NOT NULL,
     "type" "FileType" NOT NULL,
@@ -90,6 +101,8 @@ CREATE TABLE "Request" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
+    "comment" TEXT,
+    "informedByEmail" BOOLEAN NOT NULL,
     "status" "RequestStatus" NOT NULL DEFAULT 'EN_ATTENTE',
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT NOT NULL,
