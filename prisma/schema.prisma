@@ -29,8 +29,8 @@ enum FileType {
 
 enum RequestStatus {
   EN_ATTENTE
-  TRAITE
-  REJETE
+  TRAITEE
+  REJETEE
 }
 
 enum UploadStatus {
@@ -45,14 +45,28 @@ enum NotificationType {
   NEWSLETTER
 }
 
+enum AccountStatus {
+  VALIDE
+  NON_VALIDE
+  GELE
+}
+
+enum Civility {
+  Monsieur
+  Madame
+}
+
 model User {
   id              String          @id @default(uuid())
   regNumber       String          @unique // registration number
   surname         String
   firstname       String
+  civility        Civility
   email           String          @unique
+  phoneNumber     String?
   password        String
   role            Role
+  isValid         Boolean         @default(false)
   inscriptionDate DateTime        @default(now())
   deletedAt       DateTime?
   files           File[]
@@ -66,6 +80,8 @@ model User {
 model File {
   id              Int           @id @default(autoincrement())
   title           String
+  author          String
+  url             String?
   description     String?
   path            String
   type            FileType
@@ -89,27 +105,11 @@ model Category {
   files File[]
 }
 
-// model FileCategory {
-//   fileId      String
-//   categoryId  String
-//   file        File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
-//   category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-//   @@id([fileId, categoryId])
-// }
-
 model Tag {
   id    Int     @id @default(autoincrement())
   name  String  @unique
   files File[]
 }
-
-// model FileTag {
-//   fileId  String
-//   tagId   String
-//   file    File    @relation(fields: [fileId], references: [id], onDelete: Cascade)
-//   tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
-//   @@id([fileId, tagId])
-// }
 
 model Rating {
   id      Int       @id @default(autoincrement())
@@ -133,13 +133,15 @@ model Comment {
 }
 
 model Request {
-  id          String        @id @default(uuid())
-  title       String
-  description String?
-  status      RequestStatus @default(EN_ATTENTE)
-  date        DateTime      @default(now())
-  userId      String
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String        @id @default(uuid())
+  title             String
+  description       String? // for who submit the request
+  comment           String? // for who process the request
+  informedByEmail   Boolean // requester want to be keep informed of that request
+  status            RequestStatus @default(EN_ATTENTE)
+  date              DateTime      @default(now())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
