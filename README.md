@@ -8,8 +8,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 1. Installer **PostgreSQL** avec ou non un GUI (PgAdmin, par exemple).
 
 2. Créer la base de données avec le nom: **digital_library**
+> La version dockerizée est disponible sur la branche **db/dockerization**.
 
-1. pour installer les dépendances de l'application, exécuter:
+3. pour installer les dépendances de l'application, exécuter:
 ```bash
 npm install
 ```
@@ -22,8 +23,8 @@ touch .env
 DATABASE_URL="postgresql://postgres@localhost:5432/digital_library?schema=public"
 ```
 > Pour ce qui est de l'architecture frontend et backend:
-> le backend sera écrit dans le dossier __/src/pages/api__.
-> le frondend, dans __/src/pages/__.
+> le backend sera écrit dans le dossier __/src/app/api__.
+> le frontend, dans __/src/pages/__.
 
 4. Migrer la base de données
 ```bash
