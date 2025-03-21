@@ -1,100 +1,73 @@
-import fs from "fs";
-import path from "path";
-import { PrismaClient, File } from "@prisma/client";
-import { NextResponse } from "next/server";
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 
-export const config = {
-  api: {
-    bodyParser: false,
+// Create the "uploads" directory if it doesn't exist
+if (!fs.existsSync('./public/uploads')) {
+    console.log("Path exists..........");
+    fs.mkdirSync('./public/uploads');
+}
+
+// Set up multer to handle the file storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/uploads'); // Path to save the uploaded file
   },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
+
+// Helper function to handle multer in a Next.js API route
+const uploadMiddleware = (req, res, next) => {
+  upload.single('file')(req, res, (err) => {
+    if (err) {
+      console.error('Multer error:', err);
+      return res.status(500).json({ message: 'File upload error', error: err });
+    }
+    next(); // Proceed to the next step (our handler)
+  });
 };
 
-const prisma = new PrismaClient();
-
-// interface FileContent {
-//   originalFilename: string;
-//   newFilename: string;
-//   mimetype: string;
-//   size: number;
-// }
-
-// interface Fields {
-//   title?: string[];
-//   author?: string[];
-//   url?: string[];
-//   description?: string[];
-//   userId?: string[];
-// }
-
-export async function POST(req) {
-  try {
-    // Ensure upload directory exists
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    // Get form data from the request
-    const formData = await req.formData();
-    const body = Object.fromEntries(formData);
-
-    // Access the file from formData
-    const fileContent = formData.get("file");
-
-    const { title, author, url, description, userId } = body;
-
-    // Validate user
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-    console.log({ title, author, url, description, userId });
-    
-
-    if (!user) {
-      return NextResponse.json({ message: "User not found or unauthorized." }, { status: 403 });
-    }
-
-    // Validate file
-    if (!fileContent) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    }
-
-    // Ensure required fields exist
-    const fileTitle = title;
-    const fileAuthor = author;
-    const fileUrl = url;
-    const fileDescription = description;
-    const fileUserId = userId;
-
-    if (!fileTitle || !fileAuthor || !fileUrl || !fileDescription || !fileUserId) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    // Store file on disk
-    const filePath = path.join(uploadDir, fileContent.name);
-    const writeStream = fs.createWriteStream(filePath);
-    writeStream.write(await fileContent.arrayBuffer());
-    writeStream.end();
-
-    // File type
-    const fileType = path.extname(fileContent.name).replace(".", "").toUpperCase();
-
-    // Store file information in the database
-    const newFile = await prisma.file.create({
-      data: {
-        title: fileTitle,
-        author: fileAuthor,
-        url: fileUrl,
-        description: fileDescription,
-        path: `/uploads/${fileContent.name}`, // Path where the file is saved
-        type: fileType,
-        userId: fileUserId,
-      },
-    });
-
-    return NextResponse.json({ message: "File uploaded successfully.", file: newFile }, { status: 201 });
-  } catch (err) {
-    console.error("File upload failed:", err);
-    return NextResponse.json({ error: "File upload failed", details: err.message }, { status: 500 });
+// POST handler for file upload
+export async function POST(req, res) {
+  // Make sure the request is using multipart form-data
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
   }
+
+  // Use the custom upload middleware
+  uploadMiddleware(req, res, () => {
+    // Now that multer has handled the file upload, let's handle it further
+
+    // Check if the file is undefined
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    // Check if other required fields are provided
+    const { title, author, description, url, userId } = req.body;
+    const file = req.file;
+
+    // Return file upload details
+    const fileDetails = {
+      title,
+      author,
+      description: description || '',
+      url: url || '',
+      userId,
+      fileName: file.filename, // File's stored name
+      fileSize: file.size,     // File size in bytes
+      filePath: file.path,     // File path in the system
+      fileUrl: `/uploads/${file.filename}`, // URL to access the file
+    };
+
+    return res.status(200).json({
+      message: 'File uploaded successfully',
+      data: fileDetails,
+    });
+  });
 }
