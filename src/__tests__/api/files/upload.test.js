@@ -1,5 +1,5 @@
 const request = require("supertest");
-import handler from "../../../pages/api/files/upload";
+import handler from "../../../app/api/files/upload";
 // import fs from "fs";
 
 describe("File Upload API", () => {
