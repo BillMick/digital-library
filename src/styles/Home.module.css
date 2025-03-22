@@ -1,0 +1,299 @@
+/* Conteneur principal */
+.container {
+  background-color: #f7f7f7;
+  color: #333333;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden; /* Empêche le défilement horizontal global */
+  display: flex;
+  flex-direction: column; /* S'assure que les éléments sont disposés verticalement */
+  min-height: 100vh; /* Permet à la page de prendre toute la hauteur de l'écran */
+  padding: 0 20px; /* Ajoute un padding horizontal pour un alignement uniforme */
+}
+
+/* En-tête */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #b3cde0;
+  margin-bottom: 20px; /* Ajoute un espace sous l'en-tête */
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.navLink {
+  color: #5b9bd5;
+  text-decoration: none;
+}
+
+/* Section "Mon Compte" */
+.monCompte {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.monCompteIcon {
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background-color: #ddd;
+  padding: 0.2rem;
+}
+
+/* Styles pour la section Newsletter */
+.newsletterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.newsletterTitle {
+  margin-bottom: 0.5rem;
+}
+
+.newsletterForm {
+  display: flex;
+  width: 100%;
+}
+
+.input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  margin-bottom: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+/* Styles pour les catégories de livres */
+.bookCategoriesSection {
+  margin-top: 20px;
+}
+
+.bookCategory {
+  margin-bottom: 20px;
+}
+
+.bookList {
+  display: flex;
+  flex-wrap: wrap; /* Permet le défilement vertical et la réorganisation */
+  gap: 20px; /* Espacement entre les éléments */
+}
+
+.bookItem {
+  flex: 1 1 calc(33.33% - 20px); /* Ajuste chaque livre pour prendre un tiers de l'espace disponible */
+  max-width: 200px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.bookImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.viewMoreButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Actualités */
+.newsSection {
+  margin-top: 20px;
+}
+
+.newsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.newsItem {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Carrousel */
+.carousel {
+  margin-top: 20px;
+}
+
+.carouselItem {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.carouselImageContainer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carouselImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carouselText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Recherche */
+.searchContainer {
+  display: flex;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.searchButton {
+  padding: 0.5rem 1rem;
+  background-color: #5b9bd5;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.searchIcon {
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* Sections principales (flex wrap pour s'adapter à l'écran) */
+.mainSections {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.extractsSection,
+.newsSection,
+.faqSection {
+  flex: 1 1 calc(33.33% - 20px); /* Largeur flexible pour chaque section */
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  min-width: 280px;
+}
+
+.extractsGrid,
+.newsGrid,
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extractCard,
+.newsCard,
+.faqItem {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Contact */
+.contactSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f3f3f3;
+  margin-top: 30px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.contactInfo,
+.newsletterForm,
+.extraSection {
+  flex: 1;
+  padding: 10px;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: #5b9bd5;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.card {
+  background-color: #F3f3f3;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.error {
+  color: #F5a8a0;
+}
+
+.footer {
+  background-color: #b3cde0;
+  padding: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
