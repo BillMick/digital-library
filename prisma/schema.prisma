@@ -69,12 +69,15 @@ model User {
   isValid         Boolean         @default(false)
   inscriptionDate DateTime        @default(now())
   deletedAt       DateTime?
+
   files           File[]
   ratings         Rating[]
   requests        Request[]
   notifications   Notification[]
   comments        Comment[]
   faq             FAQ[]
+
+  @@index([email, role, regNumber])
 }
 
 model File {
@@ -93,22 +96,31 @@ model File {
   deletedAt       DateTime?
   userId          String
   user            User          @relation(fields: [userId], references: [id], onDelete: Cascade) // should change ... Cascade <- SET NULL
+
   categories      Category[]
   tags            Tag[]
   ratings         Rating[]
   comments        Comment[]
+
+  @@index([title, author, type, status, userId])
 }
 
 model Category {
   id    Int     @id @default(autoincrement())
   name  String  @unique
+
   files File[]
+
+  @@index([name])
 }
 
 model Tag {
   id    Int     @id @default(autoincrement())
   name  String  @unique
+
   files File[]
+
+  @@index([name])
 }
 
 model Rating {
@@ -120,6 +132,8 @@ model Rating {
   fileId  Int
   user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, fileId])
 }
 
 model Comment {
@@ -130,18 +144,22 @@ model Comment {
   fileId  Int
   user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, fileId])
 }
 
 model Request {
   id                String        @id @default(uuid())
   title             String
-  description       String? // for who submit the request
-  comment           String? // for who process the request
+  description       String? // for who submits the request
+  comment           String? // for who processes the request
   informedByEmail   Boolean // requester want to be keep informed of that request
   status            RequestStatus @default(EN_ATTENTE)
   date              DateTime      @default(now())
   userId            String
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([title, status, userId])
 }
 
 model Notification {
@@ -152,6 +170,8 @@ model Notification {
   status  Boolean           @default(false)
   userId  String
   user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model FAQ {
@@ -162,4 +182,6 @@ model FAQ {
   updatedAt DateTime  @default(now())
   userId    String?
   user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, question])
 }

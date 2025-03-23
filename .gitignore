@@ -171,3 +171,4 @@ dist
 .pnp.*
 
 /public/uploads
+/src/app/api/files
