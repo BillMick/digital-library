@@ -2,6 +2,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
 import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
   api: {
@@ -11,14 +12,11 @@ export const config = {
 
 const prisma = new PrismaClient();
 
-export async function POST(req, response) {
-//   if (req.method !== "POST") {
-//     return response.status(405).json({ error: "Method Not Allowed" });
-//   }
+export default async function POST(req: NextApiRequest, response: NextApiResponse) {
 
   const uploadDir = path.join(process.cwd(), "public/uploads"); 
   if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+    fs.mkdirSync(uploadDir, { recursive: true }); // create the directory if not exists.
   }
 
   const form = new formidable.IncomingForm({
@@ -28,35 +26,30 @@ export async function POST(req, response) {
   });
 
   // Handle form parsing asynchronously
-  form.parse(req, async (err, fields, files) => {
+  form.parse(req, async (err: any, fields: any, files: any) => {
     
     if (err) {
       console.error("File upload failed:", err);
       return response.status(500).json({ error: "File upload failed", details: err });
     }
-
+    
     const { title, author, url, description, userId } = fields;
     const user = await prisma.user.findUnique({
       where:{
-        id: userId,
+        id: userId[0],
       },
     });
-    if (user.isValid()) {
+    if (user && user.isValid) {
+      console.log(fields, user);
+
       const file = files.file[0];
 
       if (!file) {
         return response.status(400).json({ error: "No file uploaded" });
       }
 
-      // Ensure the fields are arrays and access the first item
-      const fileTitle = title ? title[0] : null;
-      const fileAuthor = author ? author[0] : null;
-      const fileUrl = url ? url[0] : null;
-      const fileDescription = description ? description[0] : null;
-      const fileUserId = userId ? userId[0] : null;
-
-      if (!fileTitle || !fileAuthor || !fileUrl || !fileDescription || !fileUserId) {
-        return response.status(400).json({ error: "Missing required fields" });
+      if (!title[0] || !author[0]) {
+        return response.status(401).json({ error: "Missing required fields" });
       }
 
       try {
@@ -65,24 +58,31 @@ export async function POST(req, response) {
 
         const newFile = await prisma.file.create({
           data: {
-            title: fileTitle,
-            author: fileAuthor,
-            url: fileUrl,
-            description: fileDescription,
+            title: title[0],
+            author: author[0],
+            url: url ? url[0] : null,
+            description: description ? description[0] : null,
             path: `/uploads/${file.newFilename}`,
-            type: fileType,
-            userId: fileUserId,
+            type: path.extname(file.originalFilename).replace(".", "").toUpperCase(),
+            userId: userId[0],
           },
         });
+        // Choose which fields to send in the response
+        const responseData = {
+          title: newFile.title,
+          author: newFile.author,
+          url: newFile.url,
+          description: description,
+        };
 
-        return response.status(201).json({ message: "File uploaded, awaiting approval.", file: newFile });
+        return response.status(201).json({ message: "File uploaded, awaiting approval. Thank you for sharing.", file: responseData });
       } catch (error) {
         console.error("Database error:", error);
-        return response.status(500).json({ error: "Database error", details: error });
+        // return response.status(500).json({ error: "Database error", details: error });
       }
     }
     else {
-      return response.status(400).json({ message: "You are not authorized." })
+      return response.status(403).json({ message: "You are not authorized." })
     }
   });
 }

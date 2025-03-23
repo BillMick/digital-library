@@ -171,3 +171,5 @@ dist
 .pnp.*
 
 /public/uploads
+/public/sample.pdf
+/src/app/api
