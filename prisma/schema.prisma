@@ -88,8 +88,8 @@ model File {
   description     String?
   path            String
   type            FileType
-  isDownloadable  Boolean       @default(true) // file exists, isReadable but is not downloadable
-  isAccessible    Boolean       @default(true) // file exists but is neither readable nor downloadable for other users (students, teachers)
+  isDownloadable  Boolean       @default(false) // file exists, isReadable but is not downloadable
+  isAccessible    Boolean       @default(false) // file exists but is neither readable nor downloadable for other users (students, teachers)
   status          UploadStatus  @default(EN_ATTENTE)
   comment         String?       
   uploadDate      DateTime      @default(now())

@@ -13,29 +13,37 @@ exports.Upload = async (data, response) => {
         });
     } else {
         try {
-            const file = data.file;
-            // return response.status(200).json({file: file});
-            const description = data.body.description;
-            if (!file) {
-            return response.status(400).send("No file uploaded.");
-            }
-        
-            const new_document = await prisma.file.create({
-                data: {
-                    title: data.body.title,
-                    author: data.body.author,
-                    userId: data.body.userId,
-                    url: data.body.url ? data.body.url : null,
-                    description: data.body.description ? data.body.description : null,
-                    path: file.path,
-                    type: path.extname(file.originalname).replace(".", "").toUpperCase(),
-                },
+            const user = await prisma.user.findUnique({
+                where:{ id: data.body.userId, },
             });
+
+            if (user && user.isValid) {
+                const file = data.file;
+                // return response.status(200).json({file: file});
+                const description = data.body.description;
+                if (!file) {
+                return response.status(400).send("No file uploaded.");
+                }
             
-            return response.status(200).json({
-                status: true,
-                document: new_document,
-            });
+                const new_document = await prisma.file.create({
+                    data: {
+                        title: data.body.title,
+                        author: data.body.author,
+                        userId: data.body.userId,
+                        url: data.body.url ? data.body.url : null,
+                        description: data.body.description ? data.body.description : null,
+                        path: file.path,
+                        type: path.extname(file.originalname).replace(".", "").toUpperCase(),
+                    },
+                });
+
+                return response.status(200).json({
+                    status: true,
+                    document: new_document,
+                });
+            }
+            
+            return response.status(403).json({ message: "You are not authorized.", });
         } catch (error) {
             console.log(`Error: ${error}`);
             response

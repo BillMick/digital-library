@@ -175,3 +175,4 @@ dist
 /src/app/api
 /controllers/upload_aws.js
 sample.epub
+sample.pdf
