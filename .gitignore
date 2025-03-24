@@ -171,6 +171,7 @@ dist
 .pnp.*
 
 /public/uploads
-/public/sample.pdf
+/public/sample.epub
 /src/app/api
 /controllers/upload_aws.js
+sample.epub

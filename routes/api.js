@@ -8,5 +8,7 @@ const upload_controller = require("../controllers/upload.js");
 router.post(
     "/upload",
     multer.single("file"),
-    upload_controller.InsertDocument
+    upload_controller.Upload
 );
+
+module.exports = router;
