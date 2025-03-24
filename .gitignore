@@ -173,3 +173,4 @@ dist
 /public/uploads
 /public/sample.pdf
 /src/app/api
+/controllers/upload_aws.js

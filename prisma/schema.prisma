@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,134 +13,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
-  id             Int              @id @default(autoincrement())
-  name           String           @unique
-  CategoryToFile CategoryToFile[]
+enum Role {
+  ETUDIANT
+  ENSEIGNANT
+  BIBLIOTHECAIRE
+  ADMINISTRATEUR
 }
 
-model Comment {
-  id      Int      @id @default(autoincrement())
-  content String
-  date    DateTime @default(now())
-  userId  String
-  fileId  Int
-  File    File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
-  User    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+enum FileType {
+  PDF
+  EPUB
+  MP3
+  TXT
 }
 
-model FAQ {
-  id        Int      @id @default(autoincrement())
-  question  String
-  answer    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  userId    String?
-  User      User?    @relation(fields: [userId], references: [id])
+enum RequestStatus {
+  EN_ATTENTE
+  TRAITEE
+  REJETEE
 }
 
-model File {
-  id             Int              @id @default(autoincrement())
-  title          String
-  author         String
-  url            String?
-  description    String?
-  path           String
-  type           FileType
-  isDownloadable Boolean          @default(true)
-  isAccessible   Boolean          @default(true)
-  status         UploadStatus     @default(EN_ATTENTE)
-  comment        String?
-  uploadDate     DateTime         @default(now())
-  deletedAt      DateTime?
-  userId         String
-  Comment        Comment[]
-  User           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Rating         Rating[]
-  CategoryToFile CategoryToFile[]
-  FileToTag      FileToTag[]
+enum UploadStatus {
+  EN_ATTENTE
+  ACCEPTEE
+  REJETEE
 }
 
-model Notification {
-  id      String           @id
-  message String
-  type    NotificationType
-  date    DateTime         @default(now())
-  status  Boolean          @default(false)
-  userId  String
-  User    User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Rating {
-  id      Int      @id @default(autoincrement())
-  note    Int      @default(1)
-  comment String?
-  date    DateTime @default(now())
-  userId  String
-  fileId  Int
-  File    File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
-  User    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Request {
-  id              String        @id
-  title           String
-  description     String?
-  comment         String?
-  informedByEmail Boolean
-  status          RequestStatus @default(EN_ATTENTE)
-  date            DateTime      @default(now())
-  userId          String
-  User            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Tag {
-  id        Int         @id @default(autoincrement())
-  name      String      @unique
-  FileToTag FileToTag[]
-}
-
-model User {
-  id              String         @id
-  regNumber       String         @unique
-  surname         String
-  firstname       String
-  civility        Civility
-  email           String         @unique
-  phoneNumber     String?
-  password        String
-  role            Role
-  isValid         Boolean        @default(false)
-  inscriptionDate DateTime       @default(now())
-  deletedAt       DateTime?
-  Comment         Comment[]
-  FAQ             FAQ[]
-  File            File[]
-  Notification    Notification[]
-  Rating          Rating[]
-  Request         Request[]
-}
-
-model CategoryToFile {
-  A        Int
-  B        Int
-  Category Category @relation(fields: [A], references: [id], onDelete: Cascade)
-  File     File     @relation(fields: [B], references: [id], onDelete: Cascade)
-
-  @@id([A, B], map: "_CategoryToFile_AB_pkey")
-  @@index([B], map: "_CategoryToFile_B_index")
-  @@map("_CategoryToFile")
-}
-
-model FileToTag {
-  A    Int
-  B    Int
-  File File @relation(fields: [A], references: [id], onDelete: Cascade)
-  Tag  Tag  @relation(fields: [B], references: [id], onDelete: Cascade)
-
-  @@id([A, B], map: "_FileToTag_AB_pkey")
-  @@index([B], map: "_FileToTag_B_index")
-  @@map("_FileToTag")
+enum NotificationType {
+  EMAIL
+  PUSH
+  NEWSLETTER
 }
 
 enum AccountStatus {
@@ -148,34 +56,132 @@ enum Civility {
   Madame
 }
 
-enum FileType {
-  PDF
-  EPUB
-  MP3
-  TXT
+model User {
+  id              String          @id @default(uuid())
+  regNumber       String          @unique // registration number
+  surname         String
+  firstname       String
+  civility        Civility
+  email           String          @unique
+  phoneNumber     String?
+  password        String
+  role            Role
+  isValid         Boolean         @default(false)
+  inscriptionDate DateTime        @default(now())
+  deletedAt       DateTime?
+
+  files           File[]
+  ratings         Rating[]
+  requests        Request[]
+  notifications   Notification[]
+  comments        Comment[]
+  faq             FAQ[]
+
+  @@index([email, role, regNumber])
 }
 
-enum NotificationType {
-  EMAIL
-  PUSH
-  NEWSLETTER
+model File {
+  id              Int           @id @default(autoincrement())
+  title           String
+  author          String
+  url             String?
+  description     String?
+  path            String
+  type            FileType
+  isDownloadable  Boolean       @default(true) // file exists, isReadable but is not downloadable
+  isAccessible    Boolean       @default(true) // file exists but is neither readable nor downloadable for other users (students, teachers)
+  status          UploadStatus  @default(EN_ATTENTE)
+  comment         String?       
+  uploadDate      DateTime      @default(now())
+  deletedAt       DateTime?
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade) // should change ... Cascade <- SET NULL
+
+  categories      Category[]
+  tags            Tag[]
+  ratings         Rating[]
+  comments        Comment[]
+
+  @@index([title, author, type, status, userId])
 }
 
-enum RequestStatus {
-  EN_ATTENTE
-  TRAITEE
-  REJETEE
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+
+  files File[]
+
+  @@index([name])
 }
 
-enum Role {
-  ETUDIANT
-  ENSEIGNANT
-  BIBLIOTHECAIRE
-  ADMINISTRATEUR
+model Tag {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+
+  files File[]
+
+  @@index([name])
 }
 
-enum UploadStatus {
-  EN_ATTENTE
-  ACCEPTEE
-  REJETEE
+model Rating {
+  id      Int       @id @default(autoincrement())
+  note    Int       @default(1) //@db.Check("note BETWEEN 1 AND 5")
+  comment String?
+  date    DateTime  @default(now())
+  userId  String
+  fileId  Int
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, fileId])
+}
+
+model Comment {
+  id      Int       @id @default(autoincrement())
+  content String
+  date    DateTime  @default(now())
+  userId  String
+  fileId  Int
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, fileId])
+}
+
+model Request {
+  id                String        @id @default(uuid())
+  title             String
+  description       String? // for who submits the request
+  comment           String? // for who processes the request
+  informedByEmail   Boolean // requester want to be keep informed of that request
+  status            RequestStatus @default(EN_ATTENTE)
+  date              DateTime      @default(now())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([title, status, userId])
+}
+
+model Notification {
+  id      String            @id @default(uuid())
+  message String
+  type    NotificationType
+  date    DateTime          @default(now())
+  status  Boolean           @default(false)
+  userId  String
+  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model FAQ {
+  id        Int       @id @default(autoincrement())
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, question])
 }
