@@ -173,7 +173,7 @@ dist
 /public/uploads
 /public/sample.epub
 /src/app/api
-/controllers/upload_aws.js
+/controllers/files/upload_aws.js
 sample.epub
 sample.pdf
 self
