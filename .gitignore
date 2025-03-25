@@ -171,3 +171,7 @@ dist
 .pnp.*
 
 /public/uploads
+controllers
+*.epub
+*.pdf
+self
