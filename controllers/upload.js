@@ -30,9 +30,12 @@ exports.Upload = async (data, response) => {
         }
 
         // Extract categories and tags if present
-        const categories = data.body.categories ? JSON.parse(data.body.categories) : [];
-        const tags = data.body.tags ? JSON.parse(data.body.tags) : [];
-
+        // return response.status(200).json({ categories: data.body.categories, tags: data.body.tags})
+        // const categories = data.body.categories ? JSON.parse(data.body.categories) : [];
+        // const tags = data.body.tags ? JSON.parse(data.body.tags) : [];
+        const categories = data.body.categories ? data.body.categories : [];
+        const tags = data.body.tags ? data.body.tags : [];
+        // return response.status(200).json({ categories: categories, tags: tags})
         // Normalize categories and tags to lowercase
         const normalizedCategories = [...new Set(categories.map(normalizeText))];
         const normalizedTags = [...new Set(tags.map(normalizeText))];
