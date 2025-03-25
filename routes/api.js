@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const checkUserValidity = require('../middlewares/user-validity');
 const multer = require("../middlewares/multer-config");
-const upload_controller = require("../controllers/upload.js");
-const download_controller = require("../controllers/download.js");
+const upload_controller = require("../controllers/files/upload.js");
+const download_controller = require("../controllers/files/download.js");
 
 // Order matters: checkUserValidity runs before multer
 router.post(
