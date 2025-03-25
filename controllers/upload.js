@@ -16,18 +16,14 @@ exports.Upload = async (data, response) => {
     } 
 
     try {
-        const user = await prisma.user.findUnique({
-            where: { id: data.body.userId },
-        });
+        const user = await prisma.user.findUnique({ where: { id: data.body.userId }, });
 
         if (!user || !user.isValid) {
             return response.status(403).json({ message: "You are not authorized." });
         }
 
         const file = data.file;
-        if (!file) {
-            return response.status(400).send("No file uploaded.");
-        }
+        if (!file) { return response.status(400).send("No file uploaded."); }
 
         // Extract categories and tags if present
         // return response.status(200).json({ categories: data.body.categories, tags: data.body.tags})
