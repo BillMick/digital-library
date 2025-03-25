@@ -67,6 +67,7 @@ model User {
   password        String
   role            Role
   isValid         Boolean         @default(false)
+  firstConnexion  Boolean         @default(true)
   inscriptionDate DateTime        @default(now())
   deletedAt       DateTime?
 
