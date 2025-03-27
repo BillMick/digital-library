@@ -1,0 +1,6 @@
+Les comptes étudiants seront validés automatiquement (isValid = true) par vérification de l'adresse mail universitaire.
+
+Les autres comptes seront validés par un administrateur (!= Bibliothécaire)
+
+RAG agent implementation
+
