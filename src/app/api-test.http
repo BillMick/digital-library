@@ -70,10 +70,11 @@ POST http://localhost:3000/api/requests/respond
 Content-Type: application/json
 
 {
-  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3", 
-  "requestId": "8436cc9c-a604-49b3-a639-a5e49027ba3e", 
-  "action": "ACCEPTEE"
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3",
+  "requestId": "8436cc9c-a604-49b3-a639-729758808fa0",
+  "action": "TRAITE"
 }
+
 
 
 ### 🔴 管理员处理用户请求 - 拒绝
@@ -82,6 +83,6 @@ Content-Type: application/json
 
 {
   "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3",  
-  "requestId": "8436cc9c-a604-49b3-a639-a5e49027ba3e", 
-  "action": "REFUSEE"
+  "requestId": "8436cc9c-a604-49b3-a639-729758808fa0", 
+  "action": "REJETE"
 }
