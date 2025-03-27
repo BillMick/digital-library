@@ -1,0 +1,87 @@
+### 📂 获取待审核文件
+GET http://localhost:3000/api/uploads/approve
+
+###
+
+### ✅ 审核文件：通过
+POST http://localhost:3000/api/uploads/approve
+Content-Type: application/json
+
+{
+  "fileId": 1,
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3",
+  "action": "ACCEPTEE",
+  "reason": "文件符合要求"
+}
+
+###
+
+### 🚫 审核文件：拒绝
+POST http://localhost:3000/api/uploads/approve
+Content-Type: application/json
+
+{
+  "fileId": 1,
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3",
+  "action": "REJETEE",
+  "reason": "文件格式不符合"
+}
+
+
+### Newsletter - 管理员发送通知
+POST http://localhost:3000/api/newsletter
+Content-Type: application/json
+
+{
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3", 
+  "title": " Nouvelle mise à jour de la bibliothèque",
+  "content": "Découvrez les nouveaux livres ajoutés cette semaine ! 📚"
+}
+
+### Newsletter - 管理员发送通知（测试标题已更换）
+POST http://localhost:3000/api/newsletter
+Content-Type: application/json
+
+{
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3",
+  "title": "📢 Mise à jour importante de la bibliothèque",
+  "content": "Découvrez les nouveaux livres ajoutés cette semaine ! 📚"
+}
+
+### 获取当前用户所有通知
+GET http://localhost:3000/api/notifications?userId=c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3
+
+### 标记通知为已读
+POST http://localhost:3000/api/notifications/read
+Content-Type: application/json
+
+{
+  "notificationId": "0142c78b-38da-4334-909f-6398f85e900e",
+  "userId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3"
+}
+
+
+### 🟢 获取待处理的用户请求（仅限管理员）
+GET http://localhost:3000/api/requests/respond
+
+
+### 🟡 管理员处理用户请求 - 接受
+POST http://localhost:3000/api/requests/respond
+Content-Type: application/json
+
+{
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3", 
+  "requestId": "8436cc9c-a604-49b3-a639-a5e49027ba3e", 
+  "action": "ACCEPTEE"
+}
+
+
+### 🔴 管理员处理用户请求 - 拒绝
+POST http://localhost:3000/api/requests/respond
+Content-Type: application/json
+
+{
+  "adminId": "c2bb79f6-f5f6-4ae1-bec0-246e666fc9c3",  
+  "requestId": "8436cc9c-a604-49b3-a639-a5e49027ba3e", 
+  "action": "REFUSEE"
+}
