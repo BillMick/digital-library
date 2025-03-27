@@ -9,23 +9,36 @@ dotenv.config();
 
 let history = [];
 
-exports.generateResponse = async (req, res) => {
+exports.Generate = async (data, res) => {
+    const required_keys = ["prompt"];
+    const missing_keys = required_keys.filter((key) => !(key in data.body));
+
+    if (missing_keys.length > 0) {
+        return res.status(400).json({
+            error: "Bad Request.",
+            message: `Missing keys: ${missing_keys.join(", ")}`,
+        });
+    } 
     try {
-        console.log(req.body);
+        console.log("Hey", data.body);
         
         const configuration = new GoogleGenerativeAI(process.env.API_KEY);
-        const modelId = "gemini-pro";
+        const modelId = "gemini-2.0-flash";
         const model = configuration.getGenerativeModel({ model: modelId });
-        const { prompt } = req.body;
-        return res.status(200).json({ prompt: req.body});
+        const { prompt } = data.body;
+        // return res.status(200).json({ prompt: data.body});
     
         const result = await model.generateContent(prompt);
-        const response = await result.response;
+        const response = result.response;
         const text = response.text();
-        console.log(text);
-    
+        // const result = await model.generateContent(prompt);
+        // const response = await result.response;
+        // const text = response.text();
+        // console.log(text);
+
+        // const text = response;
         history.push(text);
-        console.log(history);
+        // console.log(history);
     
         res.send({ response: text });
     } catch (err) {
@@ -34,7 +47,7 @@ exports.generateResponse = async (req, res) => {
     }
 };
 
-exports.history = (req, res) => {
+exports.history = (data, res) => {
     return res.status(200).json({ history: history });
 }
   

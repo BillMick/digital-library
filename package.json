@@ -19,6 +19,7 @@
   "homepage": "https://github.com/BillMick/digital-library#readme",
   "dependencies": {
     "@elastic/elasticsearch": "^8.17.1",
+    "@google/genai": "^0.6.0",
     "@google/generative-ai": "^0.24.0",
     "@prisma/client": "^6.5.0",
     "cors": "^2.8.5",
