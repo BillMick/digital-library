@@ -174,7 +174,7 @@ dist
 /public/sample.epub
 /src/app/api
 /controllers/files/upload_aws.js
-sample.epub
-sample.pdf
+sample.*
 self
 /controllers/rag/test.js
+/resources
