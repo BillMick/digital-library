@@ -3,6 +3,7 @@ const router = express.Router();
 const checkUserValidity = require('../middlewares/user-validity');
 const upload_controller = require("../controllers/files/upload.js");
 const search_controller = require("../controllers/files/search.js");
+const user_files_controller = require("../controllers/files/user_files.js");
 const download_controller = require("../controllers/files/download.js");
 const ragController = require("../controllers/rag/gemini_loading.js");
 
@@ -24,6 +25,7 @@ router.get("/by-id/:fileId", search_controller.SearchByID);
 router.get("/by-title/:title", search_controller.SearchByTitle);
 router.get("/by-author/:author", search_controller.SearchByAuthor);
 
-
+router.get("/connect/:userId/:fileId", user_files_controller.ConnectToUser);
+router.get("/disconnect/:userId/:fileId", user_files_controller.DisconnectToUser);
 
 module.exports = router;

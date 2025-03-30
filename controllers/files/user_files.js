@@ -14,7 +14,6 @@ exports.ConnectToUser = async (data, response) => {
         return response.status(200).json({user: user, message: "File is well added to your personal list."});
     }
     return response.status(403).json({message: "You're not authorized."});
-
 }
 
 exports.DisconnectToUser = async (data, response) => {
