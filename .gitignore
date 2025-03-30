@@ -173,3 +173,5 @@ dist
 /resources
 /controllers
 /public/uploads
+sample.*
+self
