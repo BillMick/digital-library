@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ETUDIANT
+  ENSEIGNANT
+  BIBLIOTHECAIRE
+  ADMINISTRATEUR
+}
+
+enum FileType {
+  PDF
+  EPUB
+  MP3
+  TXT
+}
+
+enum RequestStatus {
+  EN_ATTENTE
+  TRAITEE
+  REJETEE
+}
+
+enum UploadStatus {
+  EN_ATTENTE
+  ACCEPTEE
+  REJETEE
+}
+
+enum NotificationType {
+  EMAIL
+  PUSH
+  NEWSLETTER
+}
+
+enum AccountStatus {
+  VALIDE
+  NON_VALIDE
+  GELE
+}
+
+enum Civility {
+  Monsieur
+  Madame
+}
+
+model User {
+  id              String          @id @default(uuid())
+  regNumber       String          @unique // registration number
+  surname         String
+  firstname       String
+  civility        Civility
+  email           String          @unique
+  phoneNumber     String?
+  password        String
+  role            Role
+  isValid         Boolean         @default(false)
+  firstConnexion  Boolean         @default(true)
+  inscriptionDate DateTime        @default(now())
+  deletedAt       DateTime?
+
+  files           File[]
+  ratings         Rating[]
+  requests        Request[]
+  notifications   Notification[]
+  comments        Comment[]
+  faq             FAQ[]
+
+  @@index([email, role, regNumber])
+}
+
+model File {
+  id              Int           @id @default(autoincrement())
+  title           String
+  author          String
+  url             String?
+  description     String?
+  path            String
+  type            FileType
+  isDownloadable  Boolean       @default(false) // file exists, isReadable but is not downloadable
+  isAccessible    Boolean       @default(false) // file exists but is neither readable nor downloadable for other users (students, teachers)
+  status          UploadStatus  @default(EN_ATTENTE)
+  comment         String?       
+  uploadDate      DateTime      @default(now())
+  deletedAt       DateTime?
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade) // should change ... Cascade <- SET NULL
+
+  categories      Category[]
+  tags            Tag[]
+  ratings         Rating[]
+  comments        Comment[]
+
+  @@index([title, author, type, status, userId])
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+
+  files File[]
+
+  @@index([name])
+}
+
+model Tag {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+
+  files File[]
+
+  @@index([name])
+}
+
+model Rating {
+  id      Int       @id @default(autoincrement())
+  note    Int       @default(1) //@db.Check("note BETWEEN 1 AND 5")
+  comment String?
+  date    DateTime  @default(now())
+  userId  String
+  fileId  Int
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, fileId])
+}
+
+model Comment {
+  id      Int       @id @default(autoincrement())
+  content String
+  date    DateTime  @default(now())
+  userId  String
+  fileId  Int
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  file    File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId, fileId])
+}
+
+model Request {
+  id                String        @id @default(uuid())
+  title             String
+  description       String? // for who submits the request
+  comment           String? // for who processes the request
+  informedByEmail   Boolean // requester want to be keep informed of that request
+  status            RequestStatus @default(EN_ATTENTE)
+  date              DateTime      @default(now())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([title, status, userId])
+}
+
+model Notification {
+  id      String            @id @default(uuid())
+  message String
+  type    NotificationType
+  date    DateTime          @default(now())
+  status  Boolean           @default(false)
+  userId  String
+  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model FAQ {
+  id        Int       @id @default(autoincrement())
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, question])
+}
