@@ -1,0 +1,5 @@
+langchain_community
+langchain_experimental
+dotenv
+google.generativeai
+psycopg2-binary

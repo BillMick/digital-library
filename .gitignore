@@ -177,5 +177,5 @@ dist
 sample.*
 self
 /controllers/rag/test.js
-/resources
+/resources/langchain_db3.ipynb
 /resources/infra-odyssey-421910-7e0f2f55ded1.json
