@@ -5,15 +5,15 @@ const upload_controller = require("../controllers/files/upload.js");
 const search_controller = require("../controllers/files/search.js");
 const user_files_controller = require("../controllers/files/user_files.js");
 const download_controller = require("../controllers/files/download.js");
-const ragController = require("../controllers/rag/gemini_loading.js");
+const ragController = require("../controllers/rag/rag_agent.js");
 
 
 
 // #################################### RAG AGENT 
 // const bodyParser = require("body-parser");
 // router.post("/generate", ragController.Generate);
-router.post("/generate", ragController.Generate);
-router.get("/generate", ragController.history);
+router.post("/generate", ragController.RagAgent);
+// router.get("/generate", ragController.history);
 // ###############################################
 
 // Order matters: checkUserValidity runs before multer

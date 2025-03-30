@@ -1,0 +1,36 @@
+[
+    {
+        "userId": "75b87090-d4cc-49fb-9700-011f7bf5d1f7",
+        "prompt": "Pourrais-tu me proposer des livres dont la cat\u00e9gorie est Art ?",
+        "response": "Fr\u00e9quences"
+    },
+    {
+        "userId": "75b87090-d4cc-49fb-9700-011f7bf5d1f7",
+        "prompt": "Pourrais-tu me proposer des livres (titre et auteur) dont la cat\u00e9gorie est Art ?",
+        "response": "Fr\u00e9quences by Owner 2"
+    },
+    {
+        "userId": "75b87090-d4cc-49fb-9700-011f7bf5d1f7",
+        "prompt": "Pourrais-tu me proposer des livres (titre et auteur) dont la cat\u00e9gorie est Art ?",
+        "response": {
+            "input": "Pourrais-tu me proposer des livres (titre et auteur) dont la cat\u00e9gorie est Art ?",
+            "output": "Fr\u00e9quences, Owner 2"
+        }
+    },
+    {
+        "userId": "75b87090-d4cc-49fb-9700-011f7bf5d1f7",
+        "prompt": "Pourrais-tu me proposer des livres dont la cat\u00e9gorie est Art ?",
+        "response": {
+            "input": "Pourrais-tu me proposer des livres dont la cat\u00e9gorie est Art ?",
+            "output": "Fr\u00e9quences by Owner 2 is a book in the art category."
+        }
+    },
+    {
+        "userId": "75b87090-d4cc-49fb-9700-011f7bf5d1f7",
+        "prompt": "Pourrais-tu me proposer des livres dont la cat\u00e9gorie est Art ?",
+        "response": {
+            "input": "Pourrais-tu me proposer des livres dont la cat\u00e9gorie est Art ?",
+            "output": "Fr\u00e9quences"
+        }
+    }
+]
