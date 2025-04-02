@@ -25,7 +25,7 @@ const AdminUserList = () => {
       method: "POST",
       body: JSON.stringify({ userId }),
     });
-    fetchUsers(); // refresh list
+    fetchUsers();
   };
 
   const handleReject = async (userId: string) => {
@@ -33,16 +33,16 @@ const AdminUserList = () => {
       method: "POST",
       body: JSON.stringify({ userId }),
     });
-    fetchUsers(); // refresh list
+    fetchUsers(); 
   };
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  if (loading) return <p>Loading users...</p>;
+  if (loading) return <p>Chargement des utilisateurs...</p>;
 
-  if (users.length === 0) return <p>No users to validate ✅</p>;
+  if (users.length === 0) return <p>Aucun utilisateur à valider✅</p>;
 
   return (
     <div className="space-y-4">
@@ -57,13 +57,13 @@ const AdminUserList = () => {
               onClick={() => handleApprove(user.id)}
               className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
             >
-              Approve
+              Valider
             </button>
             <button
               onClick={() => handleReject(user.id)}
               className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
             >
-              Reject
+              Rejeter
             </button>
           </div>
         </div>
