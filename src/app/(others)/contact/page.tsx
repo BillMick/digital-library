@@ -25,7 +25,7 @@ const PageContact = ({}) => {
   return (
     <div>
       <header className="text-center max-w-2xl mx-auto - mb-14 sm:mb-16 lg:mb-28 ">
-        <Heading2>Contact us</Heading2>
+        <Heading2>Nous Contacter</Heading2>
         <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
           Drop us message and we will get back for you.
         </span>

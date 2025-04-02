@@ -39,8 +39,9 @@ const SectionHero2: FC<SectionHero2Props> = ({}) => {
         <div className="hidden md:block absolute z-[1] top-0 start-0 bottom-0 w-44 from-black bg-gradient-to-r rtl:bg-gradient-to-l"></div>
         <Image
           fill
-          className="object-cover"
-          src="https://images.pexels.com/photos/4666750/pexels-photo-4666750.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+          // className="object-cover"
+          // src="https://images.pexels.com/photos/4666750/pexels-photo-4666750.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+          src="/home-image.jpg"
           sizes="1260px"
           alt="hero"
         />

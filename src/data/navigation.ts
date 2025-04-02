@@ -271,7 +271,7 @@ const OTHER_PAGE_CHILD: NavItemType[] = [
       },
       {
         id: randomId(),
-        href: "/dashboard/billing-address",
+        href: "/dashboard/request",
         name: "Billing address",
       },
     ],
@@ -377,7 +377,7 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: randomId(),
     href: "/contact" as Route,
-    name: "Contact Us",
+    name: "Nous contacter",
   },
   // single pages ----------------
   {

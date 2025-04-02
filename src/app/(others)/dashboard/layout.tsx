@@ -14,17 +14,17 @@ const subPages: { href: Route; pageName: string; emoij: string }[] = [
     pageName: "Profil",
   },
   {
-    href: "/dashboard/posts",
+    href: "/dashboard/files",
     emoij: "📕",
     pageName: "Fichiers",
   },
   {
-    href: "/dashboard",
+    href: "/dashboard/upload",
     emoij: "⏳",
     pageName: "Proposer un fichier",
   },
   {
-    href: "/dashboard/billing-address",
+    href: "/dashboard/request",
     emoij: "✈",
     pageName: "Requête",
   },
@@ -47,10 +47,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={`nc-PageDashboard`}>
       <header className="text-center max-w-2xl mx-auto - mb-14 sm:mb-16 lg:mb-24">
-        <Heading2 emoji="">Dash board</Heading2>
+        <Heading2 emoji="">Dashboard</Heading2>
         <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
-          View your dashboard, manage your posts, subscription and edit and
-          profile.
+          <hr />
         </span>
       </header>
 
