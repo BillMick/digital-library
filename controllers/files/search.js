@@ -3,6 +3,24 @@ const prisma = new PrismaClient();
 
 // ################# add userId to verify role (important for non accessible files...)
 
+exports.AllFiles = async (data, response) => {
+    const files = await prisma.file.findMany({
+        where: {
+            isAccessible: true,
+        },
+        include: {
+            categories: true,
+            tags: true,
+            ratings: true,
+            comments: true,
+        }
+    });
+    console.log(files);
+    return response.status(200).json({
+        files: files
+    });
+}
+
 exports.SearchByID = async (data, response) => {
     let required_keys = ["fileId"];
     const missing_keys = required_keys.filter((key) => !(key in data.params));

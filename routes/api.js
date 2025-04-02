@@ -21,6 +21,7 @@ const multer = require("../middlewares/multer-config");
 router.post( "/upload", multer.single("file"), upload_controller.Upload );
 router.get("/download/:fileId", download_controller.Download);
 
+router.get("/files", search_controller.AllFiles);
 router.get("/by-id/:fileId", search_controller.SearchByID);
 router.get("/by-title/:title", search_controller.SearchByTitle);
 router.get("/by-author/:author", search_controller.SearchByAuthor);
