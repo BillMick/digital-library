@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DEMO_POSTS } from "@/data/posts";
 import { PostDataType } from "@/data/types";
 import { DEMO_AUTHORS } from "@/data/authors";
@@ -42,6 +42,28 @@ const TABS = ["Articles", "Categories", "Tags", "Authors"];
 
 const PageSearch = ({}) => {
   let s = "Technology";
+  // const [posts, setPosts] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+
+  // Fetch data on component mount
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const responsePosts = await fetch("http://localhost:3003/api/files");
+  //       const postsData = await responsePosts.json();
+  //       setPosts(postsData);
+  //     } catch (error) {
+  //       // setError(error);
+  //       console.error(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const [tabActive, setTabActive] = useState(TABS[0]);
 

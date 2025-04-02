@@ -8,32 +8,30 @@ import React, { ReactNode } from "react";
 
 const subPages: { href: Route; pageName: string; emoij: string }[] = [
   {
-    href: "/dashboard",
-    emoij: "⏳",
-    pageName: "Dash board",
-  },
-  {
-    href: "/dashboard/posts",
-
-    emoij: "📕",
-    pageName: "Posts",
-  },
-  {
     href: "/dashboard/edit-profile",
 
     emoij: "🛠",
-    pageName: "Edit profile",
+    pageName: "Profil",
+  },
+  {
+    href: "/dashboard/posts",
+    emoij: "📕",
+    pageName: "Fichiers",
+  },
+  {
+    href: "/dashboard",
+    emoij: "⏳",
+    pageName: "Proposer un fichier",
+  },
+  {
+    href: "/dashboard/billing-address",
+    emoij: "✈",
+    pageName: "Requête",
   },
   {
     href: "/dashboard/subscription",
     emoij: "📃",
     pageName: "Subscription",
-  },
-  {
-    href: "/dashboard/billing-address",
-
-    emoij: "✈",
-    pageName: "Billing address",
   },
   {
     href: "/dashboard/submit-post",

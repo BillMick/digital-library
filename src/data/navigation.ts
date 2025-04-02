@@ -322,91 +322,67 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: randomId(),
     href: "/",
-    name: "Homes",
-    type: "dropdown",
-    children: [
-      { id: randomId(), href: "/", name: "Home page 1" },
-      { id: randomId(), href: "/home-2", name: "Home page 2" },
-      { id: randomId(), href: "/home-3", name: "Home page 3" },
-      { id: randomId(), href: "/home-4", name: "Home page 4" },
-      { id: randomId(), href: "/home-6", name: "Home page 5" },
-      { id: randomId(), href: "/", name: "Header style 1", isNew: true },
-      { id: randomId(), href: "/home-2", name: "Header style 2", isNew: true },
-      { id: randomId(), href: "/home-3", name: "Header style 3" },
-    ],
-  },
-
-  // single pages ----------------
-  {
-    id: randomId(),
-    href: "/single/demo-slug" as Route,
-    name: "Singles",
-    type: "dropdown",
-    children: [
-      {
-        id: randomId(),
-        href: "/single/demo-slug" as Route,
-        name: "Single page 1",
-      },
-      {
-        id: randomId(),
-        href: "/single-2/demo-slug" as Route,
-        name: "Single page 2",
-      },
-      {
-        id: randomId(),
-        href: "/single-3/demo-slug" as Route,
-        name: "Single page 3",
-      },
-      {
-        id: randomId(),
-        href: "/single-4/demo-slug" as Route,
-        name: "Single page 4",
-      },
-
-      {
-        id: randomId(),
-        href: "/single-audio/demo-slug" as Route,
-        name: "Single Audio",
-      },
-      {
-        id: randomId(),
-        href: "/single-video/demo-slug" as Route,
-        name: "Single Video",
-      },
-      {
-        id: randomId(),
-        href: "/single-gallery/demo-slug" as Route,
-        name: "Single Gallery",
-        isNew: true,
-      },
-    ],
+    name: "Accueil",
+    // type: "dropdown",
+    // name: "Beauty",
+    // children: [
+    //   { id: randomId(), href: "/", name: "Home page 1" },
+    //   { id: randomId(), href: "/home-2", name: "Home page 2" },
+    //   { id: randomId(), href: "/home-3", name: "Home page 3" },
+    //   { id: randomId(), href: "/home-4", name: "Home page 4" },
+    //   { id: randomId(), href: "/home-6", name: "Home page 5" },
+    //   { id: randomId(), href: "/", name: "Header style 1", isNew: true },
+    //   { id: randomId(), href: "/home-2", name: "Header style 2", isNew: true },
+    //   { id: randomId(), href: "/home-3", name: "Header style 3" },
+    // ],
   },
 
   //
-  {
-    id: randomId(),
-    href: "/archive/demo-slug" as Route,
-    name: "Beauty",
-  },
+  // {
+  //   id: randomId(),
+  //   href: "/archive/demo-slug" as Route,
+  //   name: "Beauty",
+  // },
 
   {
     id: randomId(),
-    href: "/archive/demo-slug" as Route,
-    name: "Sport",
+    href: "/search" as Route,
+    name: "Rechercher",
   },
   {
     id: randomId(),
-    href: "/search",
+    href: "/templates",
     name: "Templates",
     type: "megaMenu",
     children: MEGAMENU_TEMPLATES,
   },
+  // {
+  //   id: randomId(),
+  //   href: "/search",
+  //   name: "Explore",
+  //   type: "dropdown",
+  //   children: OTHER_PAGE_CHILD,
+  // },
+  // single pages ----------------
   {
     id: randomId(),
-    href: "/search",
-    name: "Explore",
-    type: "dropdown",
-    children: OTHER_PAGE_CHILD,
+    href: "/news" as Route,
+    name: "News",
+  },
+  {
+    id: randomId(),
+    href: "/faq" as Route,
+    name: "FAQ",
+  },
+  {
+    id: randomId(),
+    href: "/contact" as Route,
+    name: "Contact Us",
+  },
+  // single pages ----------------
+  {
+    id: randomId(),
+    href: "/login" as Route,
+    name: "Se connecter",
   },
 ];
