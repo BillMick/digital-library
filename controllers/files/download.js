@@ -28,8 +28,8 @@ exports.Download = async (data, response) => {
                     return response.status(404).json({message: "Not authorized to download."});
                 }
             
-                const filePath = path.join(__dirname, "../", file.path);
-                console.log(filePath);
+                const filePath = path.join(__dirname, "../..", file.path);
+                // console.log(filePath);
                 
 
                 // Check if the file exists
