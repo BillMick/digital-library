@@ -8,15 +8,15 @@ import Heading2 from "@/components/Heading/Heading2";
 
 const info = [
   {
-    title: "🗺 ADDRESS",
-    desc: "Photo booth tattooed prism, portland taiyaki hoodie neutra typewriter",
+    title: "🗺 ADRESSE",
+    desc: "Photo booth tatoué prism, portland taiyaki hoodie neutra typewriter",
   },
   {
     title: "💌 EMAIL",
     desc: "nc.example@example.com",
   },
   {
-    title: "☎ PHONE",
+    title: "☎ TÉLÉPHONE",
     desc: "000-123-456-7890",
   },
 ];
@@ -26,9 +26,7 @@ const PageContact = ({}) => {
     <div>
       <header className="text-center max-w-2xl mx-auto - mb-14 sm:mb-16 lg:mb-28 ">
         <Heading2>Nous Contacter</Heading2>
-        <span className="block text-sm mt-2 text-neutral-700 sm:text-base dark:text-neutral-200">
-          Drop us message and we will get back for you.
-        </span>
+        <hr />
       </header>
 
       <div className="grid gap-8 lg:grid-cols-2">
@@ -45,7 +43,7 @@ const PageContact = ({}) => {
           ))}
           <div>
             <h3 className="uppercase font-semibold text-sm dark:text-neutral-200 tracking-wider">
-              🌏 SOCIALS
+              🌏 RÉSEAUX SOCIAUX
             </h3>
             <SocialsList className="mt-2" />
           </div>
@@ -54,16 +52,16 @@ const PageContact = ({}) => {
         <div>
           <form className="grid grid-cols-1 gap-6" action="#" method="post">
             <label className="block">
-              <Label>Full name</Label>
+              <Label>Nom complet</Label>
 
-              <Input placeholder="Example Doe" type="text" className="mt-1" />
+              <Input placeholder="Exemple Doe" type="text" className="mt-1" />
             </label>
             <label className="block">
-              <Label>Email address</Label>
+              <Label>Adresse e-mail</Label>
 
               <Input
                 type="email"
-                placeholder="example@example.com"
+                placeholder="exemple@example.com"
                 className="mt-1"
               />
             </label>
@@ -72,7 +70,7 @@ const PageContact = ({}) => {
 
               <Textarea className="mt-1" rows={6} />
             </label>
-            <ButtonPrimary type="submit">Send Message</ButtonPrimary>
+            <ButtonPrimary type="submit">Envoyer le message</ButtonPrimary>
           </form>
         </div>
       </div>

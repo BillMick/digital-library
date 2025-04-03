@@ -6,24 +6,28 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "How many team members can I invite?",
-    answer: "You can invite up to 10 team members per subscription.",
+    question: "Combien de livres puis-je emprunter à la fois ?",
+    answer: "Vous pouvez emprunter jusqu'à 5 livres en même temps.",
   },
   {
-    question: "What is the maximum file upload size?",
-    answer: "The maximum file upload size is 2GB.",
+    question: "Quel est le format des livres disponibles ?",
+    answer: "Nos livres sont disponibles en format numérique (PDF, ePub) et audio.",
   },
   {
-    question: "How do I reset my password?",
-    answer: "Go to settings and click on 'Reset Password'.",
+    question: "Comment puis-je réserver un livre qui est déjà emprunté ?",
+    answer: "Vous pouvez réserver un livre en cliquant sur 'Réserver' et vous serez notifié dès qu'il sera disponible.",
   },
   {
-    question: "Can I cancel my subscription?",
-    answer: "Yes, you can cancel anytime in your account settings.",
+    question: "Puis-je lire un livre sans connexion Internet ?",
+    answer: "Oui, vous pouvez télécharger les livres pour les lire hors ligne après les avoir empruntés.",
   },
   {
-    question: "Do you provide additional support?",
-    answer: "Yes, we offer 24/7 support for all premium users.",
+    question: "Y a-t-il une limite de temps pour emprunter un livre ?",
+    answer: "Oui, chaque livre peut être emprunté pour une durée maximale de 30 jours.",
+  },
+  {
+    question: "Puis-je lire des livres sur plusieurs appareils ?",
+    answer: "Oui, vous pouvez lire vos livres sur plusieurs appareils, à condition d'utiliser le même compte.",
   },
 ];
 
@@ -36,13 +40,13 @@ export default function FAQ() {
 
   return (
     <section className="flex flex-col items-center justify-center px-6 py-16 bg-gray-50">
-      {/* FAQ Header */}
+      {/* Header des FAQ */}
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-extrabold text-gray-800">Frequently Asked Questions</h2>
-        <p className="text-gray-600 mt-2">Find answers to common questions.</p>
+        <h2 className="text-4xl font-extrabold text-gray-800">Questions Fréquemment Posées</h2>
+        <p className="text-gray-600 mt-2">Trouvez des réponses aux questions courantes sur notre bibliothèque en ligne.</p>
       </div>
 
-      {/* FAQ Content */}
+      {/* Contenu des FAQ */}
       <div className="max-w-3xl w-full bg-white p-6 rounded-xl shadow-lg">
         {faqs.map((faq, index) => (
           <div key={index} className="border-b last:border-none">
@@ -54,7 +58,7 @@ export default function FAQ() {
               <ChevronDown className={`transition-transform ${openIndex === index ? "rotate-180" : ""}`} />
             </button>
 
-            {/* FAQ Answer with smooth animation */}
+            {/* Réponse de la FAQ avec une animation fluide */}
             <motion.div
               initial={false}
               animate={{ height: openIndex === index ? "auto" : 0 }}
@@ -66,9 +70,9 @@ export default function FAQ() {
         ))}
       </div>
 
-      {/* Illustration (Optional) */}
+      {/* Illustration (optionnelle) */}
       <div className="mt-10">
-        <Image src="/faq-image.svg" alt="FAQ Illustration" width={300} height={300} />
+        <Image src="/faq-image.svg" alt="Illustration des FAQ" width={300} height={300} />
       </div>
     </section>
   );

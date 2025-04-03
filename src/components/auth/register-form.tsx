@@ -144,7 +144,7 @@ const RegisterForm = () => {
                 name="regNumber"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Numéro</FormLabel>
+                    <FormLabel>Matricule</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
