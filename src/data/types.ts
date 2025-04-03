@@ -38,9 +38,10 @@ export interface PostDataType {
   id: string | number;
   author: PostAuthorType;
   date: string;
-  href: Route;
+  url: Route;
   categories: TaxonomyType[];
   title: string;
+  isDownloadable: boolean;
   featuredImage: string | StaticImageData;
   desc?: string;
   like: {

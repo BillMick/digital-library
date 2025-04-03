@@ -86,30 +86,31 @@ const PageHomeDemo4: React.FC = () => {
         <SectionHero2 />
         <div className="relative overflow-hidden">
           <div className="container relative">
-            <SectionTrending
-              heading=""
-              className="py-16 lg:py-28"
-              posts={DEMO_POSTS.filter((_, i) => i < 8)}
-            />
             <div className="relative py-16">
               <BackgroundSection />
               <SectionSliderNewCategories
-                heading="Subtopics of Travel"
-                subHeading="Discover 286,833 beautiful places to go"
+                heading="Sujets innovants"
+                subHeading="Découvrez les catégories et tags les plus innovants."
                 categories={TRAVEL_SUBCATS}
               />
             </div>
 
-            <SectionMagazine6
+            <SectionTrending
+              heading="Quelques commentaires motivants."
+              className="py-16 lg:py-28"
+              posts={DEMO_POSTS.filter((_, i) => i < 8)}
+            />
+
+            {/* <SectionMagazine6
               className="py-16 lg:py-28"
               heading="🧩 Editor Picks"
-            />
+            /> */}
 
             <div className="relative py-16">
               <BackgroundSection />
               <SectionSliderNewAuthors
-                heading="Newest authors"
-                subHeading="Say hello to future creator potentials"
+                heading="Quelques auteurs que vous aimeriez certainement"
+                subHeading="Un mix de catégories et de tags."
                 authors={DEMO_AUTHORS.filter((_, i) => i < 10)}
               />
             </div>
@@ -125,8 +126,8 @@ const PageHomeDemo4: React.FC = () => {
               <SectionGridPosts
                 headingIsCenter
                 postCardName="card10V2"
-                heading="Explore latest video articles"
-                subHeading="Hover on the post card and preview video 🥡"
+                heading="Les dernières nouveautés"
+                subHeading="Survolez la carte et prévisualisez la vidéo 🥡"
                 posts={DEMO_POSTS_VIDEO.filter((_, i) => i > 5 && i < 12)}
                 gridClass="sm:grid-cols-2 lg:grid-cols-3"
               />
@@ -138,7 +139,7 @@ const PageHomeDemo4: React.FC = () => {
             />
           </div>
 
-          <div className="dark bg-neutral-800 dark:bg-black dark:bg-opacity-20 text-neutral-100">
+          {/* <div className="dark bg-neutral-800 dark:bg-black dark:bg-opacity-20 text-neutral-100">
             <div className="relative container">
               <SectionGridPosts
                 className="py-16 lg:py-28"
@@ -149,7 +150,7 @@ const PageHomeDemo4: React.FC = () => {
                 gridClass="sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
   post,
   isHover = false,
 }) => {
-  const { featuredImage, postType, videoUrl, galleryImgs, audioUrl, id, href } =
+  const { featuredImage, postType, videoUrl, galleryImgs, audioUrl, id } = //href
     post;
 
   const isPostMedia = () => postType === "video" || postType === "audio";
@@ -29,7 +29,7 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
     if (!galleryImgs) return null;
     return (
       <GallerySlider
-        href={href}
+        href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcm9ja3JvbGw%3D"}
         galleryImgs={galleryImgs}
         className="absolute inset-0 z-10"
         galleryClass="absolute inset-0"
@@ -79,7 +79,7 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
       {renderContent()}
       {postType !== "gallery" && (
         <Link
-          href={href}
+          href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcm9ja3JvbGw%3D"}
           className={`block absolute inset-0 ${
             !postType || postType === "standard"
               ? "bg-black/20 transition-opacity opacity-0 group-hover:opacity-100"

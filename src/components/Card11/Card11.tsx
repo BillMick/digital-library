@@ -11,18 +11,18 @@ import Link from "next/link";
 
 export interface Card11Props {
   className?: string;
-  post: PostDataType;
+  file: PostDataType;
   ratio?: string;
   hiddenAuthor?: boolean;
 }
 
 const Card11: FC<Card11Props> = ({
   className = "h-full",
-  post,
+  file,
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
-  const { title, href, categories, date } = post;
+  const { title, url, categories, date } = file;
 
   const [isHover, setIsHover] = useState(false);
 
@@ -37,17 +37,17 @@ const Card11: FC<Card11Props> = ({
         className={`block flex-shrink-0 relative w-full rounded-t-3xl overflow-hidden z-10 ${ratio}`}
       >
         <div>
-          <PostFeaturedMedia post={post} isHover={isHover} />
+          <PostFeaturedMedia post={file} isHover={isHover} />
         </div>
       </div>
-      <Link href={href} className="absolute inset-0"></Link>
+      <Link href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcm9ja3JvbGw%3D"} className="absolute inset-0"></Link>
       <span className="absolute top-3 inset-x-3 z-10">
         <CategoryBadgeList categories={categories} />
       </span>
 
       <div className="p-4 flex flex-col space-y-3">
         {!hiddenAuthor ? (
-          <PostCardMeta meta={post} />
+          <PostCardMeta meta={file} />
         ) : (
           <span className="text-xs text-neutral-500">{date}</span>
         )}

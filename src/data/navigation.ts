@@ -349,13 +349,13 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
     href: "/search" as Route,
     name: "Rechercher",
   },
-  {
-    id: randomId(),
-    href: "/templates",
-    name: "Templates",
-    type: "megaMenu",
-    children: MEGAMENU_TEMPLATES,
-  },
+  // {
+  //   id: randomId(),
+  //   href: "/templates",
+  //   name: "Templates",
+  //   type: "megaMenu",
+  //   children: MEGAMENU_TEMPLATES,
+  // },
   // {
   //   id: randomId(),
   //   href: "/search",
@@ -382,7 +382,7 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   // single pages ----------------
   {
     id: randomId(),
-    href: "/login" as Route,
+    href: "/auth/login" as Route,
     name: "Se connecter",
   },
 ];

@@ -27,11 +27,11 @@ const PageHomeDemo6: React.FC = () => {
 
           <SectionAds className="pt-16 lg:pt-24" />
 
-          <SectionMagazine2
+          {/* <SectionMagazine2
             className="pt-16 lg:pt-24"
             heading="Latest Articles"
             posts={MAGAZINE2_POSTS}
-          />
+          /> */}
 
           {/* === SECTION 11 === */}
           <SectionMagazine11 className="py-16 lg:py-24" />
@@ -40,13 +40,13 @@ const PageHomeDemo6: React.FC = () => {
         {/* === SECTION 11 === */}
         <div className="dark bg-neutral-900 dark:bg-black dark:bg-opacity-20 text-neutral-100">
           <div className="relative container">
-            <SectionLatestPosts
+            {/* <SectionLatestPosts
               heading="Latest Articles"
               className="py-16 lg:py-24"
               posts={DEMO_POSTS_NEWS.filter((_, i) => i > 7 && i < 18)}
               postCardName="card4"
               gridClass="sm:grid-cols-2"
-            />
+            /> */}
           </div>
         </div>
       </div>

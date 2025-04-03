@@ -38,10 +38,33 @@ const FILTERS = [
   { name: "Most Viewed" },
 ];
 
-const TABS = ["Articles", "Categories", "Tags", "Authors"];
+const TABS = ["Fichiers", "Catégories", "Tags", "Auteurs"];
 
 const PageSearch = ({}) => {
-  let s = "Technology";
+  const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // const [tabActive, setTabActive] = useState(TABS[0]);
+
+  useEffect(() => {
+    const fetchFiles = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("http://localhost:3003/api/files");
+        const data = await response.json();
+        setFiles(data.files); // Ensure the response structure has "files"
+      } catch (error) {
+        console.error("Error fetching files:", error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchFiles();
+  }, []);
+
+  let s = "Technologie";
   // const [posts, setPosts] = useState([]);
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
@@ -141,15 +164,12 @@ const PageSearch = ({}) => {
               </form>
               <div className="w-full text-sm text-start mt-4 text-neutral-500 dark:text-neutral-300">
                 <div className="inline-block space-x-1.5 sm:space-x-2.5 rtl:space-x-reverse">
-                  <span className="">Related:</span>
+                  <span className="">Sont reliés:</span>
                   <NcLink className="inline-block font-normal" href="/search">
                     Design
                   </NcLink>
                   <NcLink className="inline-block font-normal" href="/search">
-                    Photo
-                  </NcLink>
-                  <NcLink className="inline-block font-normal" href="/search">
-                    Vector
+                    Optimisation
                   </NcLink>
                   <NcLink className="inline-block font-normal" href="/search">
                     Frontend
@@ -187,14 +207,21 @@ const PageSearch = ({}) => {
           </div>
 
           {/* LOOP ITEMS */}
-          {/* LOOP ITEMS POSTS */}
+          {/* LOOP ITEMS FILES */}
           {tabActive === "Articles" && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-8 mt-8 lg:mt-10">
-              {posts.map((post) => (
-                <Card11 key={post.id} post={post} />
-              ))}
+              {loading ? (
+                <p className="text-center col-span-full">Chargement...</p>
+              ) : error ? (
+                <p className="text-center col-span-full text-red-500">Erreur de chargement.</p>
+              ) : files.length === 0 ? (
+                <p className="text-center col-span-full">Aucun fichier trouvé.</p>
+              ) : (
+                files.map((file) => <Card11 key={file.id} file={file} />)
+              )}
             </div>
           )}
+
           {/* LOOP ITEMS CATEGORIES */}
           {tabActive === "Categories" && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 md:gap-8 mt-8 lg:mt-10">

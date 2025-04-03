@@ -32,7 +32,7 @@ const PageHomeDemo2: React.FC = () => {
 
         <SectionSliderNewCategories
           className="pb-16 lg:pb-28"
-          heading="Top trending topics"
+          heading="Les thématiques les plus tendances"
           categoryCardType="card5"
           itemPerRow={4}
           subHeading="Discover over 112 topics"
