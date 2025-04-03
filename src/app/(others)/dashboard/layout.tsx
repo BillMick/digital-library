@@ -28,17 +28,17 @@ const subPages: { href: Route; pageName: string; emoij: string }[] = [
     emoij: "✈",
     pageName: "Requête",
   },
-  {
-    href: "/dashboard/subscription",
-    emoij: "📃",
-    pageName: "Subscription",
-  },
-  {
-    href: "/dashboard/submit-post",
+  // {
+  //   href: "/dashboard/subscription",
+  //   emoij: "📃",
+  //   pageName: "Subscription",
+  // },
+  // {
+  //   href: "/dashboard/submit-post",
 
-    emoij: "✍",
-    pageName: "Submit post",
-  },
+  //   emoij: "✍",
+  //   pageName: "Submit post",
+  // },
 ];
 
 const Layout = ({ children }: { children: ReactNode }) => {

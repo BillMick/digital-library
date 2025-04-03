@@ -1,5 +1,6 @@
 "use client";
 
+import RagChat from "@/components/RagChat/RagChat";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import HeaderLogged from "@/components/Header/HeaderLogged";
@@ -8,7 +9,9 @@ import Header2 from "@/components/Header/Header2";
 import {
   ShoppingBagIcon as ShoppingCartIcon,
   Cog8ToothIcon as CogIcon,
-} from "@heroicons/react/24/outline";
+  ChatBubbleLeftEllipsisIcon as ChatIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import { Popover, Transition } from "@headlessui/react";
 import SwitchDarkMode2 from "@/components/SwitchDarkMode/SwitchDarkMode2";
 import { useThemeMode } from "@/hooks/useThemeMode";
@@ -16,17 +19,11 @@ import { useThemeMode } from "@/hooks/useThemeMode";
 const SiteHeader = () => {
   let pathname = usePathname();
   useThemeMode();
-  //
 
-  //
-  // FOR OUR DEMO PAGE, use do not use this, you can delete it.
-  // const [headerSelected, setHeaderSelected] = useState<
-  //   "Header 1" | "Header 2" | "Header 3"
-  // >("Header 1");
   const [headerSelected, setHeaderSelected] = useState("Header 1");
   const [themeDir, setThemeDIr] = useState<"rtl" | "ltr">("ltr");
+  const [showChat, setShowChat] = useState(false);
 
-  //
   useEffect(() => {
     if (themeDir === "rtl") {
       document.querySelector("html")?.setAttribute("dir", "rtl");
@@ -38,32 +35,6 @@ const SiteHeader = () => {
     };
   }, [themeDir]);
 
-  //
-
-  const renderRadioThemeDir = () => {
-    return (
-      <div>
-        <span className="text-sm font-medium">Theme dir</span>
-        <div className="mt-1.5 flex items-center space-x-2 rtl:space-x-reverse">
-          {(["rtl", "ltr"] as ("rtl" | "ltr")[]).map((dir) => {
-            return (
-              <div
-                key={dir}
-                className={`py-1.5 px-3.5 flex items-center rounded-full font-medium text-xs cursor-pointer select-none uppercase ${
-                  themeDir === dir
-                    ? "bg-black dark:bg-neutral-200 text-white dark:text-black shadow-black/10 shadow-lg"
-                    : "border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500"
-                }`}
-                onClick={() => setThemeDIr(dir)}
-              >
-                {dir}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
   const renderControlSelections = () => {
     return (
       <div className="ControlSelections relative z-40 hidden md:block">
@@ -92,8 +63,6 @@ const SiteHeader = () => {
                       <div className="relative p-6 space-y-3.5 xl:space-y-5">
                         <span className="text-xl font-semibold">Personnaliser votre affichage</span>
                         <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-                        {renderRadioThemeDir()}
-                        {/* {renderRadioHeaders()} */}
                         <div className="flex space-x-2 xl:space-x-4 rtl:space-x-reverse">
                           <span className="text-sm font-medium">Dark mode</span>
                           <SwitchDarkMode2 />
@@ -109,7 +78,6 @@ const SiteHeader = () => {
       </div>
     );
   };
-  //
 
   const headerComponent = useMemo(() => {
     let HeadComponent = HeaderLogged;
@@ -119,17 +87,42 @@ const SiteHeader = () => {
     if (pathname === "/home-3" || headerSelected === "Header 3") {
       HeadComponent = Header2;
     }
-
     return <HeadComponent />;
   }, [pathname, headerSelected]);
 
   return (
     <>
-      {/* for our demo page, please delete this if you do not use */}
+      {/* Control Selection Panel (Dark Mode, Settings, etc.) */}
       {renderControlSelections()}
-      {/*  */}
 
+      {/* Header Component */}
       {headerComponent}
+
+      {/* Floating Chat Button */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <button
+          onClick={() => setShowChat(!showChat)}
+          className="p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
+        >
+          <ChatIcon className="w-6 h-6" />
+        </button>
+
+        {/* Chat Window */}
+        {showChat && (
+          <div className="fixed bottom-16 right-4 w-80 bg-white shadow-lg rounded-lg border p-4">
+            <div className="flex justify-between items-center border-b pb-2">
+              <span className="font-semibold">RAG Agent</span>
+              <button
+                onClick={() => setShowChat(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <XMarkIcon className="w-5 h-5" />
+              </button>
+            </div>
+            <RagChat />
+          </div>
+        )}
+      </div>
     </>
   );
 };
