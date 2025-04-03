@@ -5,6 +5,8 @@ const path = require('path');
 const normalizeText = (text) => text.trim().toLowerCase();
 
 exports.Upload = async (data, response) => {
+    console.log(data.body);
+    
     const required_keys = ["title", "author", "userId"];
     const missing_keys = required_keys.filter((key) => !(key in data.body));
 
@@ -29,8 +31,18 @@ exports.Upload = async (data, response) => {
         // return response.status(200).json({ categories: data.body.categories, tags: data.body.tags})
         // const categories = data.body.categories ? JSON.parse(data.body.categories) : [];
         // const tags = data.body.tags ? JSON.parse(data.body.tags) : [];
+        data.body = data.body.tags ? {
+            ...data.body,
+            tags: data.body.tags.split(",").map(tag => tag.trim()),
+        } : [];
+        const tags = data.body.tags;
+        // data.body = data.body.categories ? {
+            //     ...data.body,
+            //     tags: data.body.categories.split(",").map(cat => cat.trim()),
+            // } : [];
         const categories = data.body.categories ? data.body.categories : [];
-        const tags = data.body.tags ? data.body.tags : [];
+        console.log(tags);
+        
         // return response.status(200).json({ categories: categories, tags: tags})
         // Normalize categories and tags to lowercase
         const normalizedCategories = [...new Set(categories.map(normalizeText))];
