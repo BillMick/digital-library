@@ -59,10 +59,10 @@ expressServer.use(bodyParser.json())
 
 expressServer.use(express.urlencoded({ extended: false }));
 
-expressServer.use((req, res, next) => {
-  console.log("Request Body:", req.body);
-  next();
-});
+// expressServer.use((req, res, next) => {
+//   console.log("Request Body:", req.body);
+//   next();
+// });
 
 expressServer.use('/api', routes)
 const port = 3003;

@@ -6,6 +6,7 @@ const search_controller = require("../controllers/files/search.js");
 const user_files_controller = require("../controllers/files/user_files.js");
 const download_controller = require("../controllers/files/download.js");
 const ragController = require("../controllers/rag/rag_agent.js");
+const categoriesController = require("../controllers/files/categories.js");
 
 
 
@@ -20,7 +21,9 @@ router.post("/generate", ragController.RagAgent);
 const multer = require("../middlewares/multer-config");
 router.post( "/upload", multer.single("file"), upload_controller.Upload );
 router.get("/download/:fileId", download_controller.Download);
+router.get("/categories", categoriesController.Categories);
 
+router.get("/files", search_controller.AllFiles);
 router.get("/by-id/:fileId", search_controller.SearchByID);
 router.get("/by-title/:title", search_controller.SearchByTitle);
 router.get("/by-author/:author", search_controller.SearchByAuthor);
