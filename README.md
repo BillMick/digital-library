@@ -36,7 +36,7 @@ node app.js
 # or
 npx nodemon app.js
 ```
-The API should be launched on the port **3003**.
+The API should be launched on the port **git **.
 
 # For RAG agent
 ## Requirements
